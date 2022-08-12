@@ -13,7 +13,17 @@ def main():
     # create an event loop
     while True:
         client_connection, _ = server_socket.accept()  # wait for client
-        client_connection.recv(1024)  # wait for client to send data
+        # count the number of pongs received
+        pongs = 0
+        while True:
+            data = client_connection.recv(1024)
+            if not data:
+                break
+            if data == b"PONG":
+                pongs += 1
+            else:
+                print(data)
+        print("Pongs:", pongs)
         client_connection.send(b"+PONG\r\n")
 
 if __name__ == "__main__":
