@@ -15,13 +15,8 @@ def main():
         # accept a new client connection
         client, _ = server_socket.accept()
 
-        # receive data from the client
-        data = client.recv(1024)
-
-        # if the data is not empty
-        if data:
-            # send data back to the client
-            client.send(b"+PONG\r\n")
+        
+        client.send(b"+PONG\r\n")
 
         # close the client connection
         client.close()
