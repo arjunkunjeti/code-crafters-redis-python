@@ -13,7 +13,7 @@ def main():
 
 
     server_socket.send(b"PONG\r\n") # send PONG to client
-
+    server_socket.close() # close server socket
 
 if __name__ == "__main__":
     main()
