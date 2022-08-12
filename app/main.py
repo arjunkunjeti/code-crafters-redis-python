@@ -10,16 +10,11 @@ def main():
     #
     server_socket = socket.create_server(("localhost", 6379), reuse_port=True)
 
-    # while there are still clients connected to the server
+    # create an event loop
     while True:
-        # accept a new client connection
-        client, _ = server_socket.accept()
-
-        
-        client.send(b"+PONG\r\n")
-
-        # close the client connection
-        client.close()
+        client_connection, _ = server_socket.accept()  # wait for client
+        client_connection.recv(1024)  # wait for client to send data
+        client_connection.send(b"+PONG\r\n")
 
 if __name__ == "__main__":
     main()
