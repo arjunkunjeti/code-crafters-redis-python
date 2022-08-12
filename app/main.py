@@ -10,10 +10,9 @@ def main():
     #
     server_socket = socket.create_server(("localhost", 6379), reuse_port=True)
 
-    # accept multiple connections
-    while True:
-        client, _ = server_socket.accept()
-        client.recv(1024)
-        client.send(b"+PONG\r\n")
+    client, _ = server_socket.accept()
+    client.recv(1024)
+    client.send(b"+PONG\r\n")
+
 if __name__ == "__main__":
     main()
