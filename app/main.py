@@ -9,14 +9,11 @@ def main():
     # Uncomment this to pass the first stage
     #
     server_socket = socket.create_server(("localhost", 6379), reuse_port=True)
-    (client_socket, address) = server_socket.accept()
-    client_socket.send(b"+PONG\r\n")
-    
-    server_socket.accept() # wait for client
 
-    # while True:
-    #     client_socket, address = server_socket.accept()
-    #     client_socket.send(b"Hello, world!")
-    #     client_socket.close()
+    while True:
+        client_socket, client_address = server_socket.accept()
+        client_socket.recv(1024)
+        client_socket.send(b"+PONG\r\n")
+        client_socket.close()
 if __name__ == "__main__":
     main()
