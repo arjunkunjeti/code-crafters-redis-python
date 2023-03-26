@@ -1,6 +1,7 @@
 # Uncomment this to pass the first stage
 import socket
 import threading
+import re
 
 
 def handle_client(conn, addr):
@@ -10,11 +11,37 @@ def handle_client(conn, addr):
             data = conn.recv(1024)
             if not data:
                 break
-            print(data)
-            conn.send(b"+PONG\r\n")
+            ret = parse_command(data)
+            print(ret)
+            conn.send(ret)
         except Exception as e:
             print(e)
             break
+
+def parse_command(data):
+    # parse RESP command
+    # bytes to string
+    data = data.decode("utf-8")
+    if data[0] == "*":
+        # split by \r\n
+        x = re.split(r"\r\n", data)
+        print(x)
+        for idx,s in enumerate(x):
+            if(s == ""):
+                continue
+            if s == "PING" or s == "ping":
+                return b"+PONG\r\n"
+            if s == "ECHO" or s == "echo":
+                return f"+{x[idx+2]}\r\n".encode()
+            # if s == "$":
+            #     print(f"{s[1:]} chars coming in")
+            # if s[0] == "*":
+            #     print(f"{s[1:]} commands coming in")
+            # if s[0] == "+":
+            #     print(f"{s[1:]} is the command")
+    pass
+
+
 
 
 def main():
