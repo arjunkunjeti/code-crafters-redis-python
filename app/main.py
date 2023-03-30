@@ -3,6 +3,7 @@ import socket
 import threading
 import re
 
+dic = {}
 
 def handle_client(conn, addr):
     while True:
@@ -33,6 +34,12 @@ def parse_command(data):
                 return b"+PONG\r\n"
             if s == "ECHO" or s == "echo":
                 return f"+{x[idx+2]}\r\n".encode()
+            if s == "SET" or s == "set":
+                dic[x[idx+2]] = x[idx+4]
+                return f"+OK\r\n".encode()
+            if s == "GET" or s == "get":
+                return f"+{dic[x[idx+2]]}\r\n".encode()
+
             # if s == "$":
             #     print(f"{s[1:]} chars coming in")
             # if s[0] == "*":
