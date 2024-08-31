@@ -40,12 +40,12 @@ def parse_command(data):
             if s == "GET" or s == "get":
                 return f"+{dic[x[idx+2]]}\r\n".encode()
 
-            # if s == "$":
-            #     print(f"{s[1:]} chars coming in")
-            # if s[0] == "*":
-            #     print(f"{s[1:]} commands coming in")
-            # if s[0] == "+":
-            #     print(f"{s[1:]} is the command")
+            if s == "$":
+                print(f"{s[1:]} chars coming in")
+            if s[0] == "*":
+                print(f"{s[1:]} commands coming in")
+            if s[0] == "+":
+                print(f"{s[1:]} is the command")
     pass
 
 
